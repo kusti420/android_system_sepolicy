@@ -37,11 +37,8 @@ auditallow untrusted_app_27 ashmem_device:chr_file open;
 # Read /mnt/sdcard symlink.
 allow untrusted_app_27 mnt_sdcard_file:lnk_file r_file_perms;
 
-# allow sending RTM_GETNEIGH{TBL} messages.
-allow untrusted_app_27 self:netlink_route_socket nlmsg_getneigh;
-auditallow untrusted_app_27 self:netlink_route_socket nlmsg_getneigh;
-allowxperm untrusted_app_27 self:netlink_route_socket nlmsg { RTM_GETNEIGH RTM_GETNEIGHTBL };
-auditallowxperm untrusted_app_27 self:netlink_route_socket nlmsg { RTM_GETNEIGH RTM_GETNEIGHTBL };
+# IchthysOS: RTM_GETNEIGH{TBL} (neighbour table: gateway and LAN MAC addresses, a
+# location/network fingerprint) is no longer allowed for legacy targetSdk apps either.
 
 # Connect to mdnsd via mdnsd socket.
 unix_socket_connect(untrusted_app_27, mdnsd, mdnsd)
